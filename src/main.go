@@ -63,8 +63,10 @@ type mainController struct {
 
 
 func main(){
-    beego.Router("/:operation", &mainController{})
+    beego.Router("/:operation/:num1:int/:num2:int", &mainController{})
     beego.Run()
+    //beego.Router("/:operation", &mainController{})
+    //beego.Run()
 }
 
 func (c *mainController) Get() {
