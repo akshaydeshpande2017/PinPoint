@@ -125,7 +125,7 @@ func Send(msg KafkaMsg) {
 		fmt.Println(err)
 	}
 
-	iamSvc := iam.New(sess)
+	//iamSvc := iam.New(sess)
 	// List IAM users
 	//// List IAM users
 	//r, err := iamSvc.ListUsers(&iam.ListUsersInput{
@@ -148,61 +148,61 @@ func Send(msg KafkaMsg) {
 	//}
 
 	// Get or Create User from UserName
-	userName := "AkshayTest1"
-	_, err = iamSvc.GetUser(&iam.GetUserInput{
-		UserName: aws.String(userName),
-	})
-	if awserr, ok := err.(awserr.Error); ok && awserr.Code() == iam.ErrCodeNoSuchEntityException {
-		fmt.Println("Error raised user not found")
-		_, err := iamSvc.CreateUser(&iam.CreateUserInput{
-			UserName: aws.String(userName),
-		})
-		if err != nil {
-			fmt.Println("CreateUser Error", err)
-			return
-		}
-	} else {
-		fmt.Println("GetUser Error", err)
-	}
+	//userName := "AkshayTest1"
+	//_, err = iamSvc.GetUser(&iam.GetUserInput{
+	//	UserName: aws.String(userName),
+	//})
+	//if awserr, ok := err.(awserr.Error); ok && awserr.Code() == iam.ErrCodeNoSuchEntityException {
+	//	fmt.Println("Error raised user not found")
+	//	_, err := iamSvc.CreateUser(&iam.CreateUserInput{
+	//		UserName: aws.String(userName),
+	//	})
+	//	if err != nil {
+	//		fmt.Println("CreateUser Error", err)
+	//		return
+	//	}
+	//} else {
+	//	fmt.Println("GetUser Error", err)
+	//}
 
 
 	// Create IAM policy for PinPoint if it does not exists.
-	arn := "arn:aws:iam::123080666138:policy/PinPointSendSMS"
-	result, err := iamSvc.GetPolicy(&iam.GetPolicyInput{
-		PolicyArn: aws.String(arn),
-	})
+	//arn := "arn:aws:iam::123080666138:policy/PinPointSendSMS"
+	//result, err := iamSvc.GetPolicy(&iam.GetPolicyInput{
+	//	PolicyArn: aws.String(arn),
+	//})
 
-	if err != nil {
-		// Creating New Policy
-		b, err := json.Marshal(&policy)
-		if err != nil {
-			fmt.Println("Error marshaling policy", err)
-			return
-		}
-		result, err := iamSvc.CreatePolicy(&iam.CreatePolicyInput{
-			PolicyDocument: aws.String(string(b)),
-			PolicyName:     aws.String("PinPointSendSMS"),
-		})
-		arn = *result.Policy.Arn
-		if err != nil {
-			fmt.Println("Error", err)
-			return
-		}
-		fmt.Println("New policy", result)
-	} else {
-		arn = *result.Policy.Arn
-	}
+	//if err != nil {
+	//	// Creating New Policy
+	//	b, err := json.Marshal(&policy)
+	//	if err != nil {
+	//		fmt.Println("Error marshaling policy", err)
+	//		return
+	//	}
+	//	result, err := iamSvc.CreatePolicy(&iam.CreatePolicyInput{
+	//		PolicyDocument: aws.String(string(b)),
+	//		PolicyName:     aws.String("PinPointSendSMS"),
+	//	})
+	//	arn = *result.Policy.Arn
+	//	if err != nil {
+	//		fmt.Println("Error", err)
+	//		return
+	//	}
+	//	fmt.Println("New policy", result)
+	//} else {
+	//	arn = *result.Policy.Arn
+	//}
 
 
 	// Attach Policy to the user
-	_, err = iamSvc.AttachUserPolicy(&iam.AttachUserPolicyInput{
-		UserName: aws.String(userName),
-		PolicyArn: aws.String(arn),
-	})
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	//_, err = iamSvc.AttachUserPolicy(&iam.AttachUserPolicyInput{
+	//	UserName: aws.String(userName),
+	//	PolicyArn: aws.String(arn),
+	//})
+	//if err != nil {
+	//	fmt.Println(err)
+	//	return
+	//}
 
 	// Creating pinpoint Config
 	svc := pinpoint.New(sess)
