@@ -1,12 +1,12 @@
 package main
 
 import (
-	"encoding/json"
+	//"encoding/json"
 	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/awserr"
+	//"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/iam"
+	//"github.com/aws/aws-sdk-go/service/iam"
 	"github.com/aws/aws-sdk-go/service/pinpoint"
 	//"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/astaxie/beego"
