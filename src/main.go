@@ -75,6 +75,7 @@ func (c *mainController) Get() {
 	msg.Type = "TRANSACTIONAL"
         msg.MessageBody = "Test msg"
         msg.Mobile = "+919820716498"
+	c.TplName = "result.html"
 	Send(msg)  
 	//consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
 	//	"bootstrap.servers":    "localhost:9092",
