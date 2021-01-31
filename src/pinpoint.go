@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/iam"
 	"github.com/aws/aws-sdk-go/service/pinpoint"
-	"github.com/confluentinc/confluent-kafka-go/kafka"
+	//"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/astaxie/beego"
 )
 
@@ -69,42 +69,47 @@ func main(){
 
 func (c *mainController) Get() {
 //func main(){
-	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers":    "localhost:9092",
-		"group.id":             "group1",
-		//"auto.offset.reset":    "newest",
-	})
-	if err != nil {
-		fmt.Println(err)
-	}
-	err = consumer.SubscribeTopics([]string{"test"}, nil)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer consumer.Close()
-	//var msg map[string]interface{}
 	var msg KafkaMsg
-	run := true
-	for run == true {
-		ev := consumer.Poll(0)
-		switch e := ev.(type) {
-		case *kafka.Message:
-			fmt.Printf("%% Message on %s:\n%s\n",
-				e.TopicPartition, string(e.Value))
-			err = json.Unmarshal(e.Value, &msg)
-			if err != nil {
-				fmt.Println(err)
-			}
-			fmt.Println(msg)
-			//run = false
-			Send(msg)
-		case kafka.PartitionEOF:
-			fmt.Println("EOF", e)
-		case kafka.Error:
-			fmt.Println("Error: ", e)
-			run = false
-		}
-	}
+	msg.Type = "TRANSACTIONAL"
+        msg.MessageBody = "Test msg"
+        msg.Mobile = "+919820716498"
+	Send(msg)  
+	//consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
+	//	"bootstrap.servers":    "localhost:9092",
+	//	"group.id":             "group1",
+	//	//"auto.offset.reset":    "newest",
+	//})
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//err = consumer.SubscribeTopics([]string{"test"}, nil)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//defer consumer.Close()
+	//var msg map[string]interface{}
+	//var msg KafkaMsg
+	//run := true
+	//for run == true {
+	//	ev := consumer.Poll(0)
+	//	switch e := ev.(type) {
+	//	case *kafka.Message:
+	//		fmt.Printf("%% Message on %s:\n%s\n",
+	//			e.TopicPartition, string(e.Value))
+	//		err = json.Unmarshal(e.Value, &msg)
+	//		if err != nil {
+	//			fmt.Println(err)
+	//		}
+	//		fmt.Println(msg)
+	//		//run = false
+	//		Send(msg)
+	//	case kafka.PartitionEOF:
+	//		fmt.Println("EOF", e)
+	//	case kafka.Error:
+	//		fmt.Println("Error: ", e)
+	//		run = false
+	//	}
+	//}
 }
 
 func Send(msg KafkaMsg) {
