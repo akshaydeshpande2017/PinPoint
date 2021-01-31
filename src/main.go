@@ -121,7 +121,7 @@ func Send(msg KafkaMsg) {
 	// Creating session
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String("ap-south-1"),
-		Credentials: credentials.NewStaticCredentials("AKIARZKBN5QNPUNRDEFX", "2SRpdioDmYYRB+5+1cKNZvcv5go+nyxqMyEE9TtA", ""),
+		Credentials: credentials.NewStaticCredentials("", "", ""),
 	})
 	if err != nil {
 		fmt.Println(err)

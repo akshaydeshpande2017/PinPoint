@@ -1,12 +1,15 @@
 FROM golang:1.15.7-buster
- RUN go get -u github.com/akshaydeshpande2017/PinPoint
+ ARG AWS_ACCESS_KEY_ID
+ ARG AWS_SECRET_ACCESS_KEY
+ RUN go get -u github.com/beego/bee
  ENV GO111MODULE=on
+ #ENV GO111MODULE=off
  ENV GOFLAGS=-mod=vendor
  ENV APP_USER app
- ENV APP_HOME /go/src/pinpoint
+ ENV APP_HOME /go/src/main
  ARG GROUP_ID
  ARG USER_ID
- RUN groupadd --gid $GROUP_ID app && useradd -m -l --uid $USER_ID --gid $GROUP_ID $APP_USER
+ RUN groupadd --gid 500 app && useradd -m -l --uid $USER_ID --gid 500 $APP_USER
  RUN mkdir -p $APP_HOME && chown -R $APP_USER:$APP_USER $APP_HOME
  USER $APP_USER
  WORKDIR $APP_HOME
