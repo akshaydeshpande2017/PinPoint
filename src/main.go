@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/pinpoint"
 	//"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/astaxie/beego"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 )
 
 type KafkaMsg struct {
@@ -120,6 +121,7 @@ func Send(msg KafkaMsg) {
 	// Creating session
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String("ap-south-1"),
+		Credentials: credentials.NewStaticCredentials("AKIARZKBN5QNPUNRDEFX", "2SRpdioDmYYRB+5+1cKNZvcv5go+nyxqMyEE9TtA", ""),
 	})
 	if err != nil {
 		fmt.Println(err)
